@@ -7,7 +7,7 @@ import express from 'express';
 const PORT = process.env.port || 9000;
 
 // body-parser
-import bodyParser from 'body-parser';
+// import bodyParser from 'body-parser';
 
 // misc vars
 const one = 1;
@@ -19,7 +19,8 @@ const app = express();
 
 // middleware - recall order here is imp!
 // and should be before any routes which are immed. followed
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(express.json());
 
 app.get('/', (_req, res) => {
   res.send(`Hello ${one} Express World!`);
