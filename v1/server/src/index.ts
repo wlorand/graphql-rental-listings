@@ -4,42 +4,48 @@
  */
 
 import express from 'express';
-const PORT = process.env.port || 9000;
+import { ApolloServer } from 'apollo-server-express';
+import { schema } from './graphqlSchema';
 
-// body-parser
+// start an express app instance
+const app = express();
+const server = new ApolloServer({ schema });
+// body-parser -- now a part of express
 // import bodyParser from 'body-parser';
 
 // misc vars
-const one = 1;
+const PORT = process.env.port || 9000;
+// const one = 1;
 
 // import mock data
-import { listings } from './listings';
-
-const app = express();
+// import { listings } from './listings';
 
 // middleware - recall order here is imp!
 // and should be before any routes which are immed. followed
 // app.use(bodyParser.json());
-app.use(express.json());
+// app.use(express.json());
 
-app.get('/', (_req, res) => {
-  res.send(`Hello ${one} Express World!`);
-});
+server.applyMiddleware({ app: app, path: '/api' });
+
+// NOTE: for GraqphQL Server first impl, comment out these REST routes
+// app.get('/', (_req, res) => {
+//   res.send(`Hello ${one} Express World!`);
+// });
 
 // GET listings
-app.get('/listings', (_req, res) => {
-  res.send(listings);
-});
+// app.get('/listings', (_req, res) => {
+//   res.send(listings);
+// });
 
 // Delete Listing via POST
-app.get('/delete-listing/:id', (req, res) => {
-  const id: string = req.params.id;
-  // remove listing
-  const newListings = listings.filter((listing) => listing.id !== id);
-  if (listings.length === newListings.length)
-    res.send('no such id found - failed to delete listing');
-  res.send(newListings);
-});
+// app.get('/delete-listing/:id', (req, res) => {
+//   const id: string = req.params.id;
+//   // remove listing
+//   const newListings = listings.filter((listing) => listing.id !== id);
+//   if (listings.length === newListings.length)
+//     res.send('no such id found - failed to delete listing');
+//   res.send(newListings);
+// });
 
 app.listen(PORT, () => {
   console.log(
