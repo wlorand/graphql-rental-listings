@@ -6,7 +6,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.schema = void 0;
 const graphql_1 = require("graphql");
-// construct a blank query and mutation object types - we need to support both
+// construct a blank query and mutation object types
+// each field has a resolver function defined for it - here returning simple strings
 const query = new graphql_1.GraphQLObjectType({
     name: 'Query',
     fields: {

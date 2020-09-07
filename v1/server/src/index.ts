@@ -5,11 +5,20 @@
 
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import { schema } from './graphqlSchema';
+
+import { typeDefs, resolvers } from './graphql';
+
+// first cut Schema def using the GraphQL JS Library
+// import { schema } from './graphqlSchema';
 
 // start an express app instance
 const app = express();
-const server = new ApolloServer({ schema });
+
+// v2: Apollo Server with GraphQL Schema Lang
+const server = new ApolloServer({ typeDefs, resolvers });
+
+// v1: Apollo Server with graphql-js schema
+// const server = new ApolloServer({ schema });
 // body-parser -- now a part of express
 // import bodyParser from 'body-parser';
 
